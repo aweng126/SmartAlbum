@@ -66,16 +66,17 @@ public class TimeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_time,container,false);
+
         //定义view
-
         rv_photo_time= (RecyclerView) view.findViewById(R.id.rv_time);
-
         mPhotos= DataHelper.getPhotos(getActivity());
 
         //设置固定大小
         rv_photo_time.setHasFixedSize(true);
-        /* mLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        rv_photo_time.setLayoutManager(mLayoutManager);*/
+        /*
+        mLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        rv_photo_time.setLayoutManager(mLayoutManager);
+        */
 
         rv_photo_time.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mAdapter=new OrderTimeAdapter(getActivity(),mPhotos);
