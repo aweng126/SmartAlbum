@@ -17,6 +17,8 @@ import com.example.kingwen.smartalbum.Adapters.OrderTimeAdapter;
 import com.example.kingwen.smartalbum.Beans.Photo;
 import com.example.kingwen.smartalbum.MyApplication.MyApplication;
 import com.example.kingwen.smartalbum.R;
+import com.example.kingwen.smartalbum.Utils.DataHelper;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -54,11 +56,7 @@ public class TimeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         myApplication= (MyApplication) getActivity().getApplication();
 
-
-        initData();
-       // mPhotos= DateHelper.getData(Constants.FORMAT_TIME);
-
-        Log.e("timefragment",mPhotos.toString());
+      //  Log.e("timefragment",mPhotos.toString());
 
     }
 
@@ -72,81 +70,19 @@ public class TimeFragment extends Fragment{
 
         rv_photo_time= (RecyclerView) view.findViewById(R.id.rv_time);
 
-        /**
-         * 设置适配器
-         */
+        mPhotos= DataHelper.getPhotos(getActivity());
 
         //设置固定大小
         rv_photo_time.setHasFixedSize(true);
-      /*  mLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        /* mLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         rv_photo_time.setLayoutManager(mLayoutManager);*/
 
         rv_photo_time.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mAdapter=new OrderTimeAdapter(getActivity(),mPhotos);
         rv_photo_time.setAdapter(mAdapter);
 
-       // Log.e("timeFragent","create");
-
         return view;
     }
 
-
-    public void initData(){
-
-
-        mPhotos=new ArrayList<>();
-        Cursor cursor=getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
-
-        Log.e("myapplication","create");
-
-        while (cursor.moveToNext()){
-
-            String id=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID));
-
-            String data=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-
-            //纬度
-            String latitude=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
-            //经度
-            String longitude=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
-
-            if(data.contains("Camera")){
-
-                int offset=data.indexOf("IMG_");
-                String time;
-
-                if(offset==-1){
-
-                    offset=data.indexOf("IMG");
-                    time =data.substring(offset+3,offset+11);
-                }else{
-                    time =data.substring(data.indexOf("IMG_")+4,data.indexOf("IMG_")+12);
-                }
-
-                /**
-                 * 设置页面显示格式
-                 */
-                String string1=time.substring(0, 4);
-                String string2=time.substring(4, 6);
-                String string3=time.substring(6,8);
-                time=string1+"-"+string2+"-"+string3;
-
-                /**
-                 * bean保存
-                 */
-                Photo mPhoto=new Photo();
-                mPhoto.setId(id);
-                mPhoto.setData(data);
-                mPhoto.setLatitude(latitude);
-                mPhoto.setLongitude(longitude);
-                mPhoto.setTime(time);
-                mPhotos.add(mPhoto);
-
-
-                Collections.reverse(mPhotos);
-               // Log.e("time", "data " + data + " latitude " + latitude + " longitude " + longitude + " id " + id + " date " + time);
-            }
-        }
-    }
 
 }
