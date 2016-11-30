@@ -5,10 +5,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="order by time"
+        android:text="  2016"
         android:textSize="30dp"
+        android:textColor="#f1f1f1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/time_header_bg"
+        />
 
 
     <android.support.v7.widget.RecyclerView
