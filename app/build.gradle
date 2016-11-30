@@ -1,21 +1,43 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'smartalbum'
+            keyPassword 'smartAlbum'
+            storeFile file('D:/workplace/AndroidStudio/keys/keys.jks')
+            storePassword 'kingwen@key11'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "24.0.1"
-
     defaultConfig {
         applicationId "com.example.kingwen.smartalbum"
         minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.config
         }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.config
+        }
+    }
+    //百度地图
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs';
+        }
+    }
+    productFlavors {
     }
 }
 
@@ -26,5 +48,15 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     //用于图片加载的glide库
     compile 'com.github.bumptech.glide:glide:3.5.2'
+    //recycleview 库
     compile 'com.android.support:recyclerview-v7:24.0.0-beta1'
+    //百度api
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile files('libs/baidumapapi_base_v4_1_1.jar')
+    compile files('libs/baidumapapi_cloud_v4_1_1.jar')
+    compile files('libs/baidumapapi_map_v4_1_1.jar')
+    compile files('libs/baidumapapi_radar_v4_1_1.jar')
+    compile files('libs/baidumapapi_search_v4_1_1.jar')
+    compile files('libs/baidumapapi_util_v4_1_1.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

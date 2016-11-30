@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:text="hello this is person fragment"
+        android:text=" person fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.kingwen.smartalbum.Views.CircleImageView
+            android:id="@+id/qingwen"
+            android:background="@drawable/loading"
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+
+
+        <com.example.kingwen.smartalbum.Views.CircleImageView
+            android:id="@+id/shuai"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/loading"
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

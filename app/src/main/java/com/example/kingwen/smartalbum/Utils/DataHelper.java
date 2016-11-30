@@ -126,9 +126,9 @@ public class DataHelper {
      * 得到两个拍照最多的点的经纬度
      * @return
      */
-    public static ArrayList<Integer> getLongLati(){
-        ArrayList<Integer> longs=new ArrayList<>();
-        ArrayList<Integer> latis=new ArrayList<>();
+    public static ArrayList<String> getLongLati(){
+        ArrayList<String> longs=new ArrayList<>();
+        ArrayList<String> latis=new ArrayList<>();
         ArrayList<Integer> sizes=new ArrayList<>();
 
         Iterator iterator=mPhotos.iterator();
@@ -142,8 +142,10 @@ public class DataHelper {
             if(longs.contains(photo.getLongitude())&&latis.contains(photo.getLatitude())){
                 sizes.set(longs.indexOf(photo.getLongitude()),longs.indexOf(photo.getLongitude())+1);
             }else {
-                longs.add(Integer.parseInt(photo.getLongitude()));
-                latis.add(Integer.parseInt(photo.getLatitude()));
+
+
+                longs.add(photo.getLongitude());
+                latis.add(photo.getLatitude());
                 sizes.add(1);
             }
         }
@@ -166,13 +168,13 @@ public class DataHelper {
         /**
          * 得到返回产生照片最多的两个地点的经纬度
          */
-        int maxlong = longs.get(sizes.indexOf(max));
-        int maxLati=latis.get(sizes.indexOf(max));
+        String maxlong = longs.get(sizes.indexOf(max));
+        String  maxLati=latis.get(sizes.indexOf(max));
 
-        int mmaxlong = longs.get(sizes.indexOf(mmax));
-        int mmaxLati=latis.get(sizes.indexOf(mmax));
+        String mmaxlong = longs.get(sizes.indexOf(mmax));
+        String  mmaxLati=latis.get(sizes.indexOf(mmax));
 
-        ArrayList<Integer> result=new ArrayList<Integer>();
+        ArrayList<String > result=new ArrayList<>();
         result.add(maxlong);
         result.add(maxLati);
         result.add(mmaxlong);
@@ -181,4 +183,57 @@ public class DataHelper {
         return result;
     }
 
+
+    public static ArrayList<Photo> getPointBySite(String lng,String lat){
+
+        ArrayList<Photo> pointBySite=new ArrayList<>();
+        Photo mPhoto;
+
+        for (int i=0;i<mPhotos.size();i++){
+            mPhoto=mPhotos.get(i);
+        if(mPhoto.getLongitude()==null||mPhoto.getLatitude()==null){
+            continue;
+        }
+            if(Math.abs(Integer.parseInt(mPhoto.getLatitude())-Integer.parseInt(lat))<20
+                    && Math.abs(Integer.parseInt(mPhoto.getLongitude())-Integer.parseInt(lng))<20  ){
+               // pointBySite.add(mPhoto.getData());
+                pointBySite.add(mPhoto);
+            }
+        }
+
+        return  pointBySite;
+
+    }
+
+    public static ArrayList<Photo> getPointByPerson(String person) {
+
+
+        ArrayList<Photo> result=new ArrayList<>();
+
+        int []qingwen={4,5,6,7,8,9,35,44,89,90};
+        int []shuai={88};
+        switch (person){
+            case "qingwen":
+                /*for(int i=0;i<mPhotos.size();i++){
+                    Photo photo=mPhotos.get(i);
+                    Log.e("qingwen",i+" "+photo.getData());
+                }*/
+
+                for (int i=0;i<qingwen.length;i++){
+                    result.add(mPhotos.get(qingwen[i]));
+                }
+
+                return  result;
+
+
+            case "shuai":
+                for (int i=0;i<shuai.length;i++){
+                    result.add(mPhotos.get(shuai[i]));
+                }
+                return  result;
+
+            default:
+                return null;
+        }
+    }
 }

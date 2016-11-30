@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.example.kingwen.smartalbum.Beans.Photo;
 
 import java.util.ArrayList;
@@ -20,49 +21,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        cursor=getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 
-        int counter=0;
+        //百度地图初始化
+        SDKInitializer.initialize(getApplicationContext());
 
-        Log.e("myapplication","create");
-
-        while (cursor.moveToNext()){
-
-            String id=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID));
-
-            String data=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-
-            //纬度
-            String latitude=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
-            //经度
-            String longitude=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
-
-            if(data.contains("Camera")){
-
-                int offset=data.indexOf("IMG_");
-                String date;
-
-                if(offset==-1){
-
-                    offset=data.indexOf("IMG");
-                    date =data.substring(offset+3,offset+11);
-                }else{
-                    date =data.substring(data.indexOf("IMG_")+4,data.indexOf("IMG_")+12);
-                }
-
-                Photo mPhoto=new Photo();
-                mPhoto.setId(id);
-                mPhoto.setData(data);
-                mPhoto.setLatitude(latitude);
-                mPhoto.setLongitude(longitude);
-                mPhoto.setTime(date);
-                myPhotoes.add(mPhoto);
-
-                Log.e("time", "data " + data + " latitude " + latitude + " longitude " + longitude + " id " + id + " date " + date);
-
-            }
-         }
-        Log.e("myapplication",myPhotoes.size()+"");
     }
 
     /**
