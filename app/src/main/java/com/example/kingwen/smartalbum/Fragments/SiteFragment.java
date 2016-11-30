@@ -25,6 +25,7 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.kingwen.smartalbum.Activities.MainActivity;
@@ -40,11 +41,22 @@ import java.util.List;
  */
 public class SiteFragment extends Fragment {
 
+    /**
+     * Map view
+     */
     private MapView mapView = null;
 
+    /**
+     * 百度Map实例
+     */
     private BaiduMap baiduMap = null;
 
+    /**
+     * 得到要定位的两个点
+     */
     private ArrayList<String> points = new ArrayList<>();
+
+
 
     private String provider;
 
@@ -59,8 +71,6 @@ public class SiteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
     }
 
 
@@ -72,17 +82,33 @@ public class SiteFragment extends Fragment {
         mapView = (MapView) view.findViewById(R.id.bdmap);
         baiduMap = mapView.getMap();
 
+        //显示当前位置：小圆点
+        baiduMap.setMyLocationEnabled(true);
+
+        locationManager= (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+
+        //获取所有的位置控制器
+        List<String> providerlist=locationManager.getProviders(true);
+        if(providerlist.contains(LocationManager.GPS_PROVIDER)){
+            provider=LocationManager.GPS_PROVIDER;
+        }else if(providerlist.contains(LocationManager.NETWORK_PROVIDER)) {
+            provider=LocationManager.NETWORK_PROVIDER;
+        }else {
+            Toast.makeText(getActivity(),"没有位置提供器可以用于使用",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        Location location=locationManager.getLastKnownLocation(provider);
+        if(location!=null){
+            navigateTo(location);
+        }
+
+
+        locationManager.requestLocationUpdates(provider,1000,1,locationListener);
+
         //初始化数据
         points= DataHelper.getLongLati();
-        Log.e("siteFragment", points.toString());
-
-
-
-        //setLocationManager();
-
-
-        LocationPoint();
-        initListener();
 
         return view;
 
@@ -105,12 +131,19 @@ public class SiteFragment extends Fragment {
             baiduMap.animateMapStatus(update);
             isFirstLocate = false;
         }
+
+
+        MyLocationData.Builder locationBuilder=new MyLocationData.Builder();
+
+        locationBuilder.latitude(location.getLatitude());
+        locationBuilder.longitude(location.getLongitude());
+
+        MyLocationData locationData=locationBuilder.build();
+        baiduMap.setMyLocationData(locationData);
+
+
     }
 
-    private void initData() {
-
-
-    }
 
     private void initListener() {
 
@@ -179,75 +212,14 @@ public class SiteFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-       // locationManager.requestLocationUpdates(provider,1000,1,locationListener);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-      //  locationManager.removeUpdates(locationListener);
-    }
-
-
-
-    /*   private void setLocationManager() {
-
-        locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        List<String> providerList = locationManager.getAllProviders();
-
-        Log.e("providerList", providerList.toString());
-
-        if (providerList.contains(LocationManager.GPS_PROVIDER)) {
-            provider = LocationManager.GPS_PROVIDER;
-        } else if (providerList.contains(LocationManager.NETWORK_PROVIDER)) {
-            provider = LocationManager.NETWORK_PROVIDER;
-        } else {
-            //当前没有可用的位置提供器时，弹出Toast提示
-            Toast.makeText(getActivity(), "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-
-        location = locationManager.getLastKnownLocation(provider);
-
-        Log.e("provider",provider);
-
-       if(location==null){
-           Log.e("main","hello");
-       }
-
-
-        if(location!=null){
-            Log.e("position",location.toString());
-            navigateTo(location);
-        }
-
-        locationManager.requestLocationUpdates(provider, 1000, 2, locationListener);
-
-
-    }*/
-
-  /*  LocationListener locationListener =new LocationListener() {
+    LocationListener locationListener =new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
 
             Log.e("locationListener","onLocationChanded");
 
+
+            //更新设备位置
             if(locationManager!=null)
                 navigateTo(location);
         }
@@ -266,7 +238,33 @@ public class SiteFragment extends Fragment {
         public void onProviderDisabled(String s) {
             Log.e("locationListener","onproviderDisabled");
         }
-    };*/
+    };
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        locationManager.requestLocationUpdates(provider,1000,1,locationListener);
+
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        locationManager.removeUpdates(locationListener);
+
+    }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        baiduMap.setMyLocationEnabled(false);
+        mapView.onDestroy();
+        if(locationManager!=null){
+            locationManager.removeUpdates(locationListener);
+        }
+
+    }
 }

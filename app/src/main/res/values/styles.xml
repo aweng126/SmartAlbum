@@ -20,7 +20,7 @@
 
     <style name="MenuTextStyle">
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>
