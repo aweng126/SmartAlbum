@@ -38,8 +38,8 @@ public class OrderTimeAdapter extends RecyclerView.Adapter<MyViewHloder> impleme
     }
 
     /*
-      * 构造方法
-      * */
+     * 构造方法
+     */
     public OrderTimeAdapter(Context context,List<Photo> datas){
         this.mContext=context;
         this.mDatas=datas;
@@ -99,7 +99,6 @@ public class OrderTimeAdapter extends RecyclerView.Adapter<MyViewHloder> impleme
         if(mOnItemClickListener!=null){
             mOnItemClickListener.onItemClick(v, (Integer) v.getTag());
         }
-
     }
 }
 

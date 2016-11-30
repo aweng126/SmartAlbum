@@ -50,11 +50,15 @@ public class SiteFragment extends Fragment {
 
     private LocationManager locationManager;
 
+    private Location location;
+
+
     private boolean isFirstLocate = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
     }
@@ -68,85 +72,23 @@ public class SiteFragment extends Fragment {
         mapView = (MapView) view.findViewById(R.id.bdmap);
         baiduMap = mapView.getMap();
 
-        initData();
+        //初始化数据
+        points= DataHelper.getLongLati();
+        Log.e("siteFragment", points.toString());
 
-        setLocationManager();
+
+
+        //setLocationManager();
+
 
         LocationPoint();
         initListener();
+
         return view;
 
     }
 
-    private void setLocationManager() {
 
-        locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        List<String> providerList = locationManager.getAllProviders();
-
-        Log.e("providerList", providerList.toString());
-
-        if (providerList.contains(LocationManager.GPS_PROVIDER)) {
-            provider = LocationManager.GPS_PROVIDER;
-        } else if (providerList.contains(LocationManager.NETWORK_PROVIDER)) {
-            provider = LocationManager.NETWORK_PROVIDER;
-        } else {
-            //当前没有可用的位置提供器时，弹出Toast提示
-            Toast.makeText(getActivity(), "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        Log.e("provider",provider);
-
-       if(location==null){
-           Log.e("main","hello");
-       }
-
-        if(location!=null){
-            Log.e("position",location.toString());
-            navigateTo(location);
-        }
-
-        locationManager.requestLocationUpdates(provider, 1000, 1, locationListener);
-
-
-    }
-
-    LocationListener locationListener =new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            if(locationManager!=null)
-                navigateTo(location);
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-    };
 
     private void navigateTo(Location location) {
 
@@ -166,9 +108,8 @@ public class SiteFragment extends Fragment {
     }
 
     private void initData() {
-        points= DataHelper.getLongLati();
 
-        Log.e("siteFragment",points.toString());
+
     }
 
     private void initListener() {
@@ -204,8 +145,6 @@ public class SiteFragment extends Fragment {
 
     }
 
-
-
     private void LocationPoint() {
 
         //定义Maker坐标点 第一个点
@@ -240,18 +179,94 @@ public class SiteFragment extends Fragment {
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        locationManager.requestLocationUpdates(provider,1000,1,locationListener);
+       // locationManager.requestLocationUpdates(provider,1000,1,locationListener);
     }
-
 
     @Override
     public void onPause() {
         super.onPause();
-        locationManager.removeUpdates(locationListener);
+      //  locationManager.removeUpdates(locationListener);
     }
+
+
+
+    /*   private void setLocationManager() {
+
+        locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        List<String> providerList = locationManager.getAllProviders();
+
+        Log.e("providerList", providerList.toString());
+
+        if (providerList.contains(LocationManager.GPS_PROVIDER)) {
+            provider = LocationManager.GPS_PROVIDER;
+        } else if (providerList.contains(LocationManager.NETWORK_PROVIDER)) {
+            provider = LocationManager.NETWORK_PROVIDER;
+        } else {
+            //当前没有可用的位置提供器时，弹出Toast提示
+            Toast.makeText(getActivity(), "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        location = locationManager.getLastKnownLocation(provider);
+
+        Log.e("provider",provider);
+
+       if(location==null){
+           Log.e("main","hello");
+       }
+
+
+        if(location!=null){
+            Log.e("position",location.toString());
+            navigateTo(location);
+        }
+
+        locationManager.requestLocationUpdates(provider, 1000, 2, locationListener);
+
+
+    }*/
+
+  /*  LocationListener locationListener =new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+
+            Log.e("locationListener","onLocationChanded");
+
+            if(locationManager!=null)
+                navigateTo(location);
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            Log.e("locationListener","onStateChanded");
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+            Log.e("locationListener","onProviderChanded");
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            Log.e("locationListener","onproviderDisabled");
+        }
+    };*/
+
 
 }
