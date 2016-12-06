@@ -70,7 +70,8 @@
         </activity>
 
         <activity android:name=".Activities.ShowPhotoBySite"></activity>
-        <activity android:name=".Activities.ShowPhotoByPerson"></activity>
+        <activity android:name=".Activities.ShowPhotoByPerson"
+     ></activity>
 
     </application>
 

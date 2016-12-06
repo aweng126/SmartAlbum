@@ -1,8 +1,8 @@
 package com.example.kingwen.smartalbum.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by kingwen on 2016/11/30.
  */
-public class ShowPhotoByPerson extends AppCompatActivity{
+public class ShowPhotoByPerson extends Activity {
     /**
      * 对应图片的地址
      */
