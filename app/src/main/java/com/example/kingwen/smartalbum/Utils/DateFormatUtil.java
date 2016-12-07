@@ -12,11 +12,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.Map;
 
 /**
  * Created by kingwen on 2016/12/7.
@@ -25,28 +29,46 @@ public class DateFormatUtil {
 
     private static final String TAG="DataFormUtil";
 
-    public LatLng getCorrectLatLng(Context context,double Lat,double Lng){
+
+    public static LatLng getCorrectLatLng(Context context,double Lat,double Lng){
+
+        String mURL="http://api.go2map.com/engine/api/translate/json?points="+Lng+","+Lat+"&type=2";
+
+
         RequestQueue mQueue=Volley.newRequestQueue(context);
-        JsonObjectRequest request=new JsonObjectRequest("", null, new Response.Listener<JSONObject>() {
+
+        LatLng latlng=new LatLng(0,0);
+
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, mURL, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray=new JSONArray(response);
+                     for(int i=0;i<jsonArray.length();i++){
+                         JSONObject jsonObject=jsonArray.getJSONObject(i);
+                         String points=jsonObject.getString("point");
+                         Log.e(TAG,"point"+points);
 
 
+                     }
 
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onErrorResponse: onErroe" );
+            }
+        }
 
-                Log.e(TAG,error.toString());
-
-             }
-           }
         );
 
-        return null;
+       mQueue.add(stringRequest);
+
+        return latlng;
     }
 
 }

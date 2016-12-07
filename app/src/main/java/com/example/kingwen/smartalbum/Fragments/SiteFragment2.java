@@ -28,6 +28,7 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.example.kingwen.smartalbum.Activities.ShowPhotoBySite;
 import com.example.kingwen.smartalbum.R;
 import com.example.kingwen.smartalbum.Utils.DataHelper;
+import com.example.kingwen.smartalbum.Utils.DateFormatUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,11 +94,11 @@ public class SiteFragment2 extends Fragment {
         */
 
         //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-         mLocationOption.setInterval(1000);
+        // mLocationOption.setInterval(1000);
 
         //设置定位一次
-       // mLocationOption.setOnceLocation(true);
-        //mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocationLatest(true);
 
 
         //设置是否返回地址信息（默认返回地址信息）
@@ -130,26 +131,9 @@ public class SiteFragment2 extends Fragment {
 
         mUiSetting=map.getUiSettings();
         mUiSetting.setAllGesturesEnabled(true);
-
         //比例尺控件
         mUiSetting.setScaleControlsEnabled(true);
 
-        /**
-         * 设置地图显示监听
-         */
-        map.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-
-            }
-
-            @Override
-            public void onCameraChangeFinish(CameraPosition cameraPosition) {
-                double lat = cameraPosition.target.latitude;
-                double lng = cameraPosition.target.longitude;
-                //setCurrentLocation(lat, lng);
-            }
-        });
 
         map.setMyLocationEnabled(true);
 
@@ -161,21 +145,23 @@ public class SiteFragment2 extends Fragment {
         //初始化数据
         points= DataHelper.getLongLati();
 
-        double lng1=Double.parseDouble(points.get(0))-0.0065;
+       // 精度
+        double lng1=Double.parseDouble(points.get(0))+0.005;
+      // 纬度
+        double lat1=Double.parseDouble(points.get(1))+0.0015;
 
-        double lat1=Double.parseDouble(points.get(1))-0.0060;
+        setCurrentLocation(lat1,lng1);
 
         double lng2=Double.parseDouble(points.get(2))+0.0228;
 
         double lat2=Double.parseDouble(points.get(3))-0.0189;
 
+        LatLng latlng=DateFormatUtil.getCorrectLatLng(getActivity(), lat2, lng2);
+
+        Log.e(TAG, "getCorrectLatlng: "+latlng.latitude+"  "+latlng.longitude);
+
+
         Log.e(TAG,"lat变化值"+lat+" "+lat2+" "+"lng变化值 "+lng+" "+lng2)                      ;
-
-       // private double lng=117.140803;
-
-        //默认纬度
-        //private double lat=36.667634;
-
 
 
         Log.e(TAG, "onCreateView: lat1"+lat1+" "+lng1+" "+lat2+" "+lng2 );
@@ -295,7 +281,7 @@ public class SiteFragment2 extends Fragment {
             Date date = new Date(amapLocation.getTime());
             df.format(date);
 
-            Log.e(TAG, "onLocationChanged: lat  " + lat + " lnt" + lng);
+           // Log.e(TAG, "onLocationChanged: lat  " + lat + " lnt" + lng);
 
         }
     };
@@ -308,7 +294,7 @@ public class SiteFragment2 extends Fragment {
 
         float zoom=firstLocation?15:cp.zoom;
        // CameraPosition cpNew = CameraPosition.fromLatLngZoom(new LatLng(lat-0.065,lng-0.060), zoom);
-        CameraPosition cpNew = CameraPosition.fromLatLngZoom(new LatLng(lat,lng), zoom);
+        CameraPosition cpNew = CameraPosition.fromLatLngZoom(new LatLng(lat,lng), 15);
         CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cpNew);
         map.moveCamera(cu);
         firstLocation=false;
