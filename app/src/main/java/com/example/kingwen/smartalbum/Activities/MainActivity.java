@@ -1,11 +1,7 @@
 package com.example.kingwen.smartalbum.Activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,12 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.kingwen.smartalbum.Fragments.PersonFragment;
 import com.example.kingwen.smartalbum.Fragments.ShareFragment;
-import com.example.kingwen.smartalbum.Fragments.SiteFragment;
 import com.example.kingwen.smartalbum.Fragments.SiteFragment2;
 import com.example.kingwen.smartalbum.Fragments.TimeFragment;
 import com.example.kingwen.smartalbum.R;
@@ -32,17 +25,20 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        /**
+         * 设置标题栏
+         */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Log.e("main", "setDefaultFragment");
-
+        /**
+         * 设置默认fragment
+         */
         setDefaultFragment();
 
-        Log.e("main","fab");
-
+/*
+        悬浮按钮
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +47,11 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+*/
 
+        /**
+         * 侧滑栏
+         */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,12 +60,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 
+    /**
+     * 设置默认的fragment
+     */
     private void setDefaultFragment(){
         currentFragment=new TimeFragment();
-
         android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_contain,currentFragment,"ONE");
@@ -81,6 +84,37 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.nav_time) {
+            //按照时间顺序
+            currentFragment=new TimeFragment();
+        } else if (id == R.id.nav_site) {
+            currentFragment=new SiteFragment2();
+        } else if (id == R.id.nav_person) {
+            currentFragment=new PersonFragment();
+        } else if (id == R.id.nav_share) {
+            currentFragment=new ShareFragment();
+        } else {
+            currentFragment=new TimeFragment();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_contain,currentFragment).commit();
+
+        return true;
+    }
+
+
+    /**
+     * 菜单栏选项
+     * @param menu 菜单栏
+     * @return
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,33 +136,5 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_time) {
-            //按照时间顺序
-            currentFragment=new TimeFragment();
-        } else if (id == R.id.nav_site) {
-            currentFragment=new SiteFragment2();
-        } else if (id == R.id.nav_person) {
-            currentFragment=new PersonFragment();
-        } else if (id == R.id.nav_share) {
-            currentFragment=new ShareFragment();
-        } else {
-            currentFragment=new TimeFragment();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_contain,currentFragment).commit();
-
-        return true;
     }
 }

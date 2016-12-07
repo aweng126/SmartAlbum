@@ -12,6 +12,8 @@ import com.example.kingwen.smartalbum.R;
 
 /**
  * Created by kingwen on 2016/11/27.
+ *
+ *   分享界面
  */
 public class ShareFragment extends Fragment{
 

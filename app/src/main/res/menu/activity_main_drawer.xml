@@ -26,7 +26,7 @@
             android:title="分享" />
     </group>
 
-    <item android:title="Communicate">
+   <!-- <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_sharing"
@@ -39,6 +39,6 @@
 
                 android:title="Send" />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

@@ -18,13 +18,12 @@ import com.example.kingwen.smartalbum.R;
 
 /**
  * Created by kingwen on 2016/11/27.
+ * 个人显示界面
  */
 public class PersonFragment extends Fragment{
 
     private Context mContext;
-
     private Activity mActivity;
-
     private ImageView qingwen;
     private ImageView shuai;
     
@@ -34,6 +33,7 @@ public class PersonFragment extends Fragment{
 
         mContext=getActivity();
         mActivity=getActivity();
+
 
     }
 
@@ -52,12 +52,10 @@ public class PersonFragment extends Fragment{
                 .override(150,150)
                 .into(qingwen);
 
-
         Glide.with(getActivity())
                 .load(R.drawable.shuai)
                 .override(150,150)
                 .into(shuai);
-
 
         qingwen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +77,6 @@ public class PersonFragment extends Fragment{
                 startActivity(intent);
             }
         });
-
-
 
         return view;
     }

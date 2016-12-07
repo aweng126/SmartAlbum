@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="hello this is share fragment"
+        android:text="分享界面~等待开发"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

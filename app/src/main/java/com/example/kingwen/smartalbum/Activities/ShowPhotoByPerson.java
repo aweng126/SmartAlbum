@@ -50,7 +50,7 @@ public class ShowPhotoByPerson extends Activity {
         String person=intent.getStringExtra("person");
         mDatas= DataHelper.getPointByPerson(person);
 
-        Log.e("showPhotoBySite",mDatas.size()+" ");
+       // Log.e("showPhotoBySite",mDatas.size()+" ");
 
         /**
          * 瀑布流效果

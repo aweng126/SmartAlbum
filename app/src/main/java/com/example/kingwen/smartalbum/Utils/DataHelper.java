@@ -22,17 +22,35 @@ public class DataHelper {
 
     public static final String TAG = "DataHelper";
 
-    public static ArrayList<Photo> getPhotos(Context context){
-
+    public DataHelper(Context context) {
         initData(context);
-
-        return  mPhotos;
     }
 
-    public DataHelper() {
-
+    /**
+     * 单例模式：用于数据帮助类对象
+     * @return
+     */
+    public static DataHelper getDataHelperInstance(Context context){
+        if(mDataHelper==null){
+            mDataHelper=new DataHelper(context);
+        }
+        return  mDataHelper;
     }
 
+
+    /**
+     * 得到相册中照片数据
+     * @return
+     */
+    public  ArrayList<Photo> getPhotos(){
+        return  mDataHelper.mPhotos;
+    }
+
+
+    /**
+     * 初始化数据：通过contentProvider来获得本地所有图片,方便后期显示数据
+     * @param context
+     */
     private static void initData(Context context) {
 
         mPhotos=new ArrayList<>();
@@ -84,40 +102,11 @@ public class DataHelper {
                 mPhotos.add(mPhoto);
 
                 Collections.reverse(mPhotos);
-                // Log.e("time", "data " + data + " latitude " + latitude + " longitude " + longitude + " id " + id + " date " + time);
+                 Log.e("time", "data " + data + " latitude " + latitude + " longitude " + longitude + " id " + id + " date " + time);
             }
         }
 
 
-    }
-
-
-    //针对不同的参数进行获取
-    public static ArrayList<Photo> getData(int dateFormat){
-
-        switch (dateFormat){
-            case Constants.FORMAT_TIME:
-                return mPhotos;
-
-            case Constants.FORMAT_SITE:
-                //地点
-
-
-                return mPhotos;
-
-            case Constants.FORMAT_PERSON:
-                //人物
-
-                return mPhotos;
-            case Constants.FORMAT_SHARE:
-
-                //分享
-                return mPhotos;
-
-            default:
-                return null;
-
-        }
     }
 
 
@@ -183,6 +172,12 @@ public class DataHelper {
     }
 
 
+    /**
+     * 通过经纬度得到附近的照片：允许相隔0.1的偏差
+     * @param lng  经度
+     * @param lat  纬度
+     * @return
+     */
     public static ArrayList<Photo> getPointBySite(String lng,String lat){
 
         ArrayList<Photo> pointBySite=new ArrayList<>();
@@ -192,44 +187,34 @@ public class DataHelper {
             mPhoto=mPhotos.get(i);
         if(mPhoto.getLongitude()==null||mPhoto.getLatitude()==null){
             continue;
-        }
-           /* if(Math.abs(Integer.parseInt(mPhoto.getLatitude())-Integer.parseInt(lat))<20
-                    && Math.abs(Integer.parseInt(mPhoto.getLongitude())-Integer.parseInt(lng))<20  ){*/
-               // pointBySite.add(mPhoto.getData());
-
-           // Log.e(TAG, "getPointBySite: " + mPhoto.getLongitude() + " " + lng + " " + mPhoto.getLatitude() + " " + lat);
-
-
-            if (Math.abs(Double.parseDouble(mPhoto.getLongitude())-Double.parseDouble(lng))<0.1&&
+        }else if (Math.abs(Double.parseDouble(mPhoto.getLongitude())-Double.parseDouble(lng))<0.1&&
                    Math.abs(Double.parseDouble(mPhoto.getLatitude())-Double.parseDouble(lat))<0.1)
-                pointBySite.add(mPhoto);
-           // }
+            {
+            pointBySite.add(mPhoto);
+            }
         }
-
         return  pointBySite;
-
     }
 
-    public static ArrayList<Photo> getPointByPerson(String person) {
 
+    /**
+     * 仿造的人脸识别：但是由于后期的实现有难度，所以最后选择的仅仅是实现一个模拟,这个功能还等待开发
+     * @param person
+     * @return
+     */
+    public static ArrayList<Photo> getPointByPerson(String person) {
 
         ArrayList<Photo> result=new ArrayList<>();
 
-        int []qingwen={4,5,6,7,8,9,35,44,89,90};
-        int []shuai={88};
+        int []qingwen={1,2,5,6,7,8,9,90,91};
+        int []shuai={89};
         switch (person){
             case "qingwen":
-                /*for(int i=0;i<mPhotos.size();i++){
-                    Photo photo=mPhotos.get(i);
-                    Log.e("qingwen",i+" "+photo.getData());
-                }*/
 
                 for (int i=0;i<qingwen.length;i++){
                     result.add(mPhotos.get(qingwen[i]));
                 }
-
                 return  result;
-
 
             case "shuai":
                 for (int i=0;i<shuai.length;i++){

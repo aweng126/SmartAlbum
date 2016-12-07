@@ -47,7 +47,7 @@ public class ShowPhotoBySite extends Activity {
         setContentView(R.layout.activity_showphoto_layout);
 
 
-        Log.e("showPhoto","by site");
+        // Log.e("showPhoto","by site");
         rv_show= (RecyclerView)findViewById(R.id.rv_showphoto);
 
         Intent intent=getIntent();
@@ -74,6 +74,7 @@ public class ShowPhotoBySite extends Activity {
         rv_show.setLayoutManager(new GridLayoutManager(this, 2));
 
         adapter=new OrderTimeAdapter(ShowPhotoBySite.this,mDatas);
+
         rv_show.setAdapter(adapter);
 
 
