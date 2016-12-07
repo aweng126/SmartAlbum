@@ -1,6 +1,7 @@
 package com.example.kingwen.smartalbum.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,18 +40,26 @@ public class ShowPhotoByPerson extends Activity {
 
     private RecyclerView.Adapter adapter;
 
+
+    private DataHelper  mDataHelper;
+
+    private Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showphoto_layout);
 
+        context=ShowPhotoByPerson.this;
+        mDataHelper=DataHelper.getDataHelperInstance(context);
+
 
         rv_show= (RecyclerView)findViewById(R.id.rv_showphoto);
+
+
         Intent intent=getIntent();
         String person=intent.getStringExtra("person");
-        mDatas= DataHelper.getPointByPerson(person);
-
-       // Log.e("showPhotoBySite",mDatas.size()+" ");
+        mDatas= mDataHelper.getPointByPerson(person);
 
         /**
          * 瀑布流效果

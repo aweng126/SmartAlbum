@@ -114,7 +114,7 @@ public class DataHelper {
      * 得到两个拍照最多的点的经纬度
      * @return
      */
-    public static ArrayList<String> getLongLati(){
+    public  ArrayList<String> getLongLati(){
         ArrayList<String> longs=new ArrayList<>();
         ArrayList<String> latis=new ArrayList<>();
         ArrayList<Integer> sizes=new ArrayList<>();
@@ -178,7 +178,7 @@ public class DataHelper {
      * @param lat  纬度
      * @return
      */
-    public static ArrayList<Photo> getPointBySite(String lng,String lat){
+    public ArrayList<Photo> getPointBySite(String lng,String lat){
 
         ArrayList<Photo> pointBySite=new ArrayList<>();
         Photo mPhoto;
@@ -202,7 +202,7 @@ public class DataHelper {
      * @param person
      * @return
      */
-    public static ArrayList<Photo> getPointByPerson(String person) {
+    public  ArrayList<Photo> getPointByPerson(String person) {
 
         ArrayList<Photo> result=new ArrayList<>();
 

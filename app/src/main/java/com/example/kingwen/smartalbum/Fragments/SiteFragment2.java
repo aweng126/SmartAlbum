@@ -69,9 +69,13 @@ public class SiteFragment2 extends Fragment {
     //判断是否是第一次定位
     private boolean firstLocation=true;
 
+    private DataHelper mDataHelper;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDataHelper=DataHelper.getDataHelperInstance(getActivity());
 
 
         //初始化定位
@@ -186,7 +190,7 @@ public class SiteFragment2 extends Fragment {
     private void setMapMaker() {
 
         //得到makers的定位地址
-        points= DataHelper.getLongLati();
+        points= mDataHelper.getLongLati();
 
         /**
          * 这里留下一个坑：关于地址的转换，地球地址和火星地址之间的转换

@@ -41,11 +41,14 @@ public class ShowPhotoBySite extends Activity {
 
     private RecyclerView.Adapter adapter;
 
+    private  DataHelper mDataHelper;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showphoto_layout);
 
+       mDataHelper=DataHelper.getDataHelperInstance(ShowPhotoBySite.this);
 
         // Log.e("showPhoto","by site");
         rv_show= (RecyclerView)findViewById(R.id.rv_showphoto);
@@ -53,7 +56,7 @@ public class ShowPhotoBySite extends Activity {
         Intent intent=getIntent();
         String lng=intent.getStringExtra("lng");
         String lat=intent.getStringExtra("lat");
-        mDatas= DataHelper.getPointBySite(lng, lat);
+        mDatas= mDataHelper.getPointBySite(lng, lat);
 
         Log.e("showPhotoBySite",mDatas.toString());
 
