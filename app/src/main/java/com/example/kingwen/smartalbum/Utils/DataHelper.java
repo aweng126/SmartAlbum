@@ -1,4 +1,5 @@
 package com.example.kingwen.smartalbum.Utils;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
@@ -43,7 +44,7 @@ public class DataHelper {
      * @return
      */
     public  ArrayList<Photo> getPhotos(){
-        return  mDataHelper.mPhotos;
+        return  mPhotos;
     }
 
 
@@ -54,7 +55,7 @@ public class DataHelper {
     private static void initData(Context context) {
 
         mPhotos=new ArrayList<>();
-        Cursor cursor=context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor=context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 
         Log.e("myapplication","create");
 
@@ -115,6 +116,7 @@ public class DataHelper {
      * @return
      */
     public  ArrayList<String> getLongLati(){
+
         ArrayList<String> longs=new ArrayList<>();
         ArrayList<String> latis=new ArrayList<>();
         ArrayList<Integer> sizes=new ArrayList<>();

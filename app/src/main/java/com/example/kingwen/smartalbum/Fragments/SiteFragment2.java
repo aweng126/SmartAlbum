@@ -1,5 +1,6 @@
 package com.example.kingwen.smartalbum.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -125,17 +126,31 @@ public class SiteFragment2 extends Fragment {
 
         mapView.onCreate(savedInstanceState);
 
+        /**
+         * 获得当前的地图对象，便于后期对于地图进行处理
+         */
         if(map==null){
             map=mapView.getMap();
         }
 
-        //设置当前画面中心
+        /**
+         * 设置当前画面中心
+         */
         setCurrentLocation(lat, lng);
 
+        /**
+         * 设置地图设置
+         */
         setMapSetting();
 
+        /**
+         * 设置覆盖物
+         */
         setMapMaker();
 
+        /**
+         * 设置覆盖物的监听事件
+         */
         setMakerListener();
 
         return view;
@@ -269,7 +284,7 @@ public class SiteFragment2 extends Fragment {
             amapLocation.getFloor();//获取当前室内定位的楼层
             //amapLocation.getGpsStatus();//获取GPS的当前状态
             //获取定位时间
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date(amapLocation.getTime());
             df.format(date);
 

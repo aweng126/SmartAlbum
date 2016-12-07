@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="  2016"
+        android:text="@string/toolbar_time_fragment"
         android:textSize="30dp"
         android:textColor="#f1f1f1"
         android:layout_width="match_parent"

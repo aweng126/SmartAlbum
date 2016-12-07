@@ -15,10 +15,11 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="5dp"
+        android:contentDescription="@string/pic_item_contentdes"
         />
 
     <TextView
-        android:text="2014-12-13"
+        android:text="@string/default_time_item"
         android:gravity="center"
         android:id="@+id/tv_pic_item"
         android:layout_width="150dp"

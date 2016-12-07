@@ -5,4 +5,18 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- 分享界面等待开发-->
+    <string name="waiting_for_coding">等待开发~</string>
+
+    <string name="toolbar_time_fragment">  2016</string>
+    <string name="item_time">时间</string>
+    <string name="item_site">地点</string>
+    <string name="item_person">人物</string>
+    <string name="item_share">分享</string>
+    <string name="pic_item_contentdes">img on item</string>
+    <string name="default_time_item">2014-12-13</string>
+    <string name="nav_header_name">大头儿子</string>
+    2016
+
 </resources>

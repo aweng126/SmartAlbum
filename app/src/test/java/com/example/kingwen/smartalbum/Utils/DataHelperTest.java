@@ -1,18 +1,30 @@
 package com.example.kingwen.smartalbum.Utils;
 
+import android.content.Context;
 import android.test.AndroidTestCase;
+
+import com.example.kingwen.smartalbum.R;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by kingwen on 2016/12/7.
  */
+
+@RunWith(MockitoJUnitRunner.class)
 public class DataHelperTest extends AndroidTestCase {
+
+    @Mock
+    Context mcontext;
 
     private DataHelper mDataHelper;
 
@@ -26,6 +38,8 @@ public class DataHelperTest extends AndroidTestCase {
 
     @Test
     public void testGetDataHelperInstance() throws Exception {
+
+        when(mcontext.getString(R.id.action_settings)).thenReturn("hello");
 
         /**
          * 确保通过单例模式会正常得到我们最后的DataHelper对象

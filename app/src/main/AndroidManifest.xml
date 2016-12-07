@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.kingwen.smartalbum">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -59,7 +60,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar"
-        >
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
 
         <!--用于定位的服务-->
@@ -74,7 +75,8 @@
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,9 +84,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.ShowPhotoBySite"></activity>
+        <activity android:name=".Activities.ShowPhotoBySite"
+            tools:ignore="InnerclassSeparator"></activity>
         <activity android:name=".Activities.ShowPhotoByPerson"
-     ></activity>
+            tools:ignore="InnerclassSeparator"></activity>
 
     </application>
 

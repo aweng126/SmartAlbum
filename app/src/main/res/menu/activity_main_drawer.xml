@@ -7,23 +7,23 @@
             android:id="@+id/nav_time"
             android:icon="@drawable/ic_menu_camera"
 
-            android:title="时间" />
+            android:title="@string/item_time" />
         <item
             android:id="@+id/nav_site"
             android:icon="@drawable/ic_menu_gallery"
 
 
-            android:title="地点" />
+            android:title="@string/item_site" />
         <item
             android:id="@+id/nav_person"
             android:icon="@drawable/ic_menu_slideshow"
 
-            android:title="人物" />
+            android:title="@string/item_person" />
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_manage"
 
-            android:title="分享" />
+            android:title="@string/item_share" />
     </group>
 
    <!-- <item android:title="Communicate">

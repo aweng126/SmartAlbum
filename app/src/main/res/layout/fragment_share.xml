@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="分享界面~等待开发"
+        android:text="@string/waiting_for_coding"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
