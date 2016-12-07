@@ -8,6 +8,7 @@ import com.example.kingwen.smartalbum.Constants.Constants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -18,6 +19,8 @@ public class DataHelper {
     private static DataHelper mDataHelper;
 
     public static ArrayList<Photo> mPhotos=new ArrayList<>();
+
+    public static final String TAG = "DataHelper";
 
     public static ArrayList<Photo> getPhotos(Context context){
 
@@ -89,10 +92,6 @@ public class DataHelper {
     }
 
 
-
-/*    //通过时间来进行分类
-    private static Map<String,ArrayList<Photo>> mTimePhotoList=new HashMap<>() ;*/
-
     //针对不同的参数进行获取
     public static ArrayList<Photo> getData(int dateFormat){
 
@@ -143,10 +142,10 @@ public class DataHelper {
                 sizes.set(longs.indexOf(photo.getLongitude()),longs.indexOf(photo.getLongitude())+1);
             }else {
 
-
                 longs.add(photo.getLongitude());
                 latis.add(photo.getLatitude());
                 sizes.add(1);
+
             }
         }
 
@@ -194,11 +193,17 @@ public class DataHelper {
         if(mPhoto.getLongitude()==null||mPhoto.getLatitude()==null){
             continue;
         }
-            if(Math.abs(Integer.parseInt(mPhoto.getLatitude())-Integer.parseInt(lat))<20
-                    && Math.abs(Integer.parseInt(mPhoto.getLongitude())-Integer.parseInt(lng))<20  ){
+           /* if(Math.abs(Integer.parseInt(mPhoto.getLatitude())-Integer.parseInt(lat))<20
+                    && Math.abs(Integer.parseInt(mPhoto.getLongitude())-Integer.parseInt(lng))<20  ){*/
                // pointBySite.add(mPhoto.getData());
+
+           // Log.e(TAG, "getPointBySite: " + mPhoto.getLongitude() + " " + lng + " " + mPhoto.getLatitude() + " " + lat);
+
+
+            if (Math.abs(Double.parseDouble(mPhoto.getLongitude())-Double.parseDouble(lng))<0.1&&
+                   Math.abs(Double.parseDouble(mPhoto.getLatitude())-Double.parseDouble(lat))<0.1)
                 pointBySite.add(mPhoto);
-            }
+           // }
         }
 
         return  pointBySite;

@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import com.example.kingwen.smartalbum.Fragments.PersonFragment;
 import com.example.kingwen.smartalbum.Fragments.ShareFragment;
 import com.example.kingwen.smartalbum.Fragments.SiteFragment;
+import com.example.kingwen.smartalbum.Fragments.SiteFragment2;
 import com.example.kingwen.smartalbum.Fragments.TimeFragment;
 import com.example.kingwen.smartalbum.R;
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity
             //按照时间顺序
             currentFragment=new TimeFragment();
         } else if (id == R.id.nav_site) {
-            currentFragment=new SiteFragment();
+            currentFragment=new SiteFragment2();
         } else if (id == R.id.nav_person) {
             currentFragment=new PersonFragment();
         } else if (id == R.id.nav_share) {

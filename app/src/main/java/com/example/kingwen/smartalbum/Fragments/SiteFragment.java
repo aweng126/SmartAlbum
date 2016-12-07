@@ -1,40 +1,7 @@
 package com.example.kingwen.smartalbum.Fragments;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.model.LatLng;
-import com.example.kingwen.smartalbum.Activities.MainActivity;
-import com.example.kingwen.smartalbum.Activities.ShowPhotoBySite;
-import com.example.kingwen.smartalbum.R;
-import com.example.kingwen.smartalbum.Utils.DataHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kingwen on 2016/11/27.
@@ -43,17 +10,17 @@ public class SiteFragment extends Fragment {
 
     /**
      * Map view
-     */
+     *//*
     private MapView mapView = null;
 
-    /**
+    *//**
      * 百度Map实例
-     */
+     *//*
     private BaiduMap baiduMap = null;
 
-    /**
+    *//**
      * 得到要定位的两个点
-     */
+     *//*
     private ArrayList<String> points = new ArrayList<>();
 
 
@@ -62,10 +29,8 @@ public class SiteFragment extends Fragment {
 
     private LocationManager locationManager;
 
-    private Location location;
-
-
     private boolean isFirstLocate = true;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -244,7 +209,7 @@ public class SiteFragment extends Fragment {
     public void onResume() {
 
         super.onResume();
-        locationManager.requestLocationUpdates(provider,1000,1,locationListener);
+       // locationManager.requestLocationUpdates(provider,1000,1,locationListener);
 
     }
 
@@ -266,5 +231,5 @@ public class SiteFragment extends Fragment {
             locationManager.removeUpdates(locationListener);
         }
 
-    }
+    }*/
 }

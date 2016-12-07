@@ -1,6 +1,7 @@
 package com.example.kingwen.smartalbum.Activities;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by kingwen on 2016/11/29.
  */
-public class ShowPhotoBySite extends AppCompatActivity {
+public class ShowPhotoBySite extends Activity {
 
     /**
      * 对应图片的地址
